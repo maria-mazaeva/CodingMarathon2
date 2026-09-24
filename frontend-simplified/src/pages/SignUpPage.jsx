@@ -14,35 +14,14 @@ const AddUserPage = () => {
     const [zipCode, setZipCode] =useState("");
     const navigate = useNavigate();
 
-    // const addUser = (newUser) => {
-    //     try {
-    //         const res = await fetch("/api/users", {
-    //             method: "POST",
-    //             headers: {
-    //             "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify(newUser),
-    //         });
-    //         if (!res.ok) {
-    //             throw new Error("Failed to add user");
-    //     }
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast.error("An error occurred while adding the user.");
-    //         return false;
-    //     }
-    //     return true;
-    //     };
-
-
     const submitForm = async (e) => {
         e.preventDefault();
 
 
         const addUser = async (newUser) => {
             try { 
-                const res = await fetch("/signup", {
-                    method: "POST",
+                const res = await fetch("http://localhost:4000/api/users/signup", {
+                    method: "POST", 
                     headers: {
                     "Content-Type": "application/json",
                     },
@@ -64,10 +43,10 @@ const AddUserPage = () => {
             name,
             email,
             password,
-            phoneNumber,
+            phone_number: phoneNumber,
             gender,
-            dateOfBirth,
-            adress: {
+            date_of_birth: dateOfBirth,
+            address: {
                 street: street,
                 city: city,
                 zipCode: zipCode
@@ -124,7 +103,7 @@ const AddUserPage = () => {
                         Password
                     </label>
                     <input
-                        type='text'
+                        type='password'
                         id='password'
                         name='password'
                         className='border rounded w-full py-2 px-3 mb-2'
@@ -164,7 +143,8 @@ const AddUserPage = () => {
                         required
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}>
-
+                        
+                        <option value="" disabled>Choose gender</option> 
                         <option value='Male'>Male</option>
                         <option value='Female'>Female</option>
                     </select>
@@ -175,7 +155,7 @@ const AddUserPage = () => {
                         Date of birth
                     </label>
                     <input
-                        type='Date'
+                        type='date'
                         id='dateOfBirth'
                         name='dateOfBirth'
                         className='border rounded w-full py-2 px-3 mb-2'
