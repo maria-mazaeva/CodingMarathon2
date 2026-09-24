@@ -29,3 +29,21 @@ const Job = mongoose.model('Job', jobSchema);
 
 module.exports = Job;
 
+
+
+// to test:
+// {
+//     "title": "developer",
+//     "type": "idk",
+//     "location": "espoo",
+//     "description": "good",
+//     "salary": "3000",
+//     "company": {
+//         "name": "kone",
+//         "description": "good",
+//         "contactEmail": "smth",
+//         "contactPhone": "3683021755"
+//     }    
+// }
+
+//6ab4dd0cbcbd6820f2e864ba
