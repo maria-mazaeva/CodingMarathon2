@@ -78,3 +78,19 @@ npm run preview
 This is the jobs listing project based on the [YouTube crash course](https://youtu.be/LDB4uaJ87e0).
 
 <img src="./frontend/public/screen.png" />
+
+### Answer
+
+this code :
+
+    jobSchema.set('toJSON', {
+    virtuals: true,
+    transform: (doc, ret) => {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+    });
+
+ensures, that virtual fields are serialized and mongoose schema/ model is valid.     
