@@ -1,7 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
 
-const Navbar = () => {
+const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
+
+  const handleClick = () => {
+      setIsAuthenticated(false);
+      localStorage.removeItem("user");
+    };
+
   const linkClass = ({ isActive }) =>
     isActive
       ? 'bg-black text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2'
@@ -16,7 +22,7 @@ const Navbar = () => {
               <img className='h-10 w-auto' src={logo} alt='React Jobs' />
               <span className='hidden md:block text-white text-2xl font-bold ml-2'>
                 React Jobs
-              </span>
+              </span> 
             </NavLink>
             <div className='md:ml-auto'>
               <div className='flex space-x-2'>
@@ -26,16 +32,21 @@ const Navbar = () => {
                 <NavLink to='/jobs' className={linkClass}>
                   Jobs
                 </NavLink>
-                <NavLink to='/add-job' className={linkClass}>
-                  Add Job
-                </NavLink>
-                <NavLink to='/login' className={linkClass}>
-                  Log In
-                </NavLink>
-                <NavLink to='/signup' className={linkClass}>
-                  Sign up
-                </NavLink>
-              </div>
+          <NavLink to='/add-job' className={linkClass}>Add Job</NavLink>
+
+     {!isAuthenticated && (
+      <div className='flex space-x-2'>     
+        <NavLink to='/login' className={linkClass}>Log In</NavLink>
+        <NavLink to='/signup' className={linkClass}>Sign up</NavLink>
+      </div>
+      )} 
+      
+      {isAuthenticated && (     
+        <div className='flex space-x-2'>
+                <button className={"text-white"} onClick={handleClick}>Log out</button>
+        </div>
+      )} 
+              </div> 
             </div>
           </div>
         </div>

@@ -2,44 +2,35 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const LogInPage = () => {
+const LogInPage = ({ setIsAuthenticated }) => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-    const logIn = async (logIn) => {
-        try {
-            const res = await fetch(`http://localhost:4000/api/users/login`, {
-                method: "POST", 
-                body: JSON.stringify(userData),
-                headers: {
-                    "Content-Type": "application/json",
-                    },
-            })
-            if (!res.ok) {
-                throw new Error("Failed to log in")
-            }
-        } catch (error) {
-            console.error(error)
-            toast.error("An error occurred during the login")
-            return false
-        }
-        return true
-        };
+  const submitForm = async (e) => {
+    e.preventDefault();
+    setIsAuthenticated(true);
+    console.log("success login");
 
-        const userData = {
-            email,
-            password,
-        };
+    setError(null); 
 
-    const submitForm  = async (e) => {
-        e.preventDefault()
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const user = await response.json();
 
-        logIn(userData)
-        toast.success("Logged in Successfully")
-        return navigate("/jobs")
-    };
+    if (!response.ok) {
+      setError(user.error);
+      return;
+    }
+
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate("/"); 
+  };
 
     return (
     <section className="bg-indigo-50">

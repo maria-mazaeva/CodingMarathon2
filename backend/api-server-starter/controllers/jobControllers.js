@@ -38,7 +38,7 @@ const getJobById = async (req, res) => {
     }
 
     try {
-        //const job = await Job.findById(jobId);
+        const job = await Job.findById(jobId);
         const limit = parseInt(req.query._limit);
         const jobs = limit 
             ? await Job.find({}).sort({ createdAt: -1 }).limit(limit)

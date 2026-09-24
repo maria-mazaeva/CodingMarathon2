@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const AddUserPage = () => {
+const AddUserPage = ({ setIsAuthenticated }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -13,32 +13,12 @@ const AddUserPage = () => {
     const [city, setCity] =useState("");
     const [zipCode, setZipCode] =useState("");
     const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     const submitForm = async (e) => {
         e.preventDefault();
-
-
-        const addUser = async (newUser) => {
-            try { 
-                const res = await fetch("http://localhost:4000/api/users/signup", {
-                    method: "POST", 
-                    headers: {
-                    "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(newUser),
-                });
-                if (!res.ok) {
-                    throw new Error("Failed to add user");
-            }
-            } catch (error) {
-                console.error(error);
-                toast.error("An error occurred while adding the user.");
-                return false;
-            }
-            return true;
-        };
-
- 
+        setError(null);
+        
         const newUser = {
             name,
             email,
@@ -53,11 +33,28 @@ const AddUserPage = () => {
             }
         };
 
-        addUser(newUser);
-        // localStorage.setItem("user", JSON.stringify(newUser));
+    const response = await fetch("http://localhost:4000/api/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser),
+    });
+    const user = await response.json();
+
+    if (!response.ok) {
+      setError(user.error);
+      toast.error("An error occurred while adding the user.")
+      return;
+    }
+
+    if (response.ok) {
+        setIsAuthenticated(true);
         toast.success('User Added Successfully');
-        return navigate('/');
-    };
+    }
+
+    localStorage.setItem("user", JSON.stringify(user));
+    console.log("success");
+    navigate("/");
+  };
 
     return (
         <section className='bg-indigo-50'>
