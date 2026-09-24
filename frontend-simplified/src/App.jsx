@@ -11,6 +11,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import JobPage from "./pages/JobPage"; 
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
+import LogInPage from "./pages/LogInPage"
 import AddUserPage from "./pages/SignUpPage";
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/add-job" element={<AddJobPage />} />
         <Route path="/edit-job/:id" element={<EditJobPage />} />
         <Route path="/jobs/:id" element={<JobPage />} />
+        <Route path="/login" element={<LogInPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/signup" element={<AddUserPage />} />
       </Route>
