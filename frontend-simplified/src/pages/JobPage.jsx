@@ -21,7 +21,7 @@ const JobPage = () => {
 
   const deleteJob = async (id) => {
     try {
-      const res = await fetch(`/api/jobs/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) {
@@ -36,7 +36,7 @@ const JobPage = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await fetch(`/api/jobs/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${id}`);
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
@@ -52,7 +52,7 @@ const JobPage = () => {
     fetchJob();
   }, [id]);
 
-  const onDeleteClick = (jobId) => {
+  const onDeleteClick = async (jobId) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this listing?"
     );
