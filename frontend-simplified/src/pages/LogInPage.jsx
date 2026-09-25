@@ -11,8 +11,6 @@ const LogInPage = ({ setIsAuthenticated }) => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    setIsAuthenticated(true);
-    console.log("success login");
 
     setError(null); 
 
@@ -27,6 +25,10 @@ const LogInPage = ({ setIsAuthenticated }) => {
       setError(user.error);
       return;
     }
+    if (response.ok) {
+        setIsAuthenticated(true);
+        toast.success('User Added Successfully');
+    }
 
     localStorage.setItem("user", JSON.stringify(user));
     navigate("/"); 
@@ -37,7 +39,7 @@ const LogInPage = ({ setIsAuthenticated }) => {
       <div className="container m-auto max-w-2xl py-24">
         <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
           <form onSubmit={submitForm}>
-            <h2 className="text-3xl text-center font-semibold mb-6">Log In</h2>
+            <h2 className="text-3xl text-center font-semibold mb-6">Log In</h2> 
 
             <div className="mb-4">
               <label

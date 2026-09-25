@@ -29,7 +29,7 @@ const AddJobPage = () => {
 
   const addJob = async (newJob) => {
     try {
-      const res = await fetch("/api/jobs", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,6 +39,15 @@ const AddJobPage = () => {
       if (!res.ok) {
         throw new Error("Failed to add job");
       }
+
+      if (res.ok) {
+        
+        toast.success('User Added Successfully');
+        return navigate("/jobs");
+        
+      }
+
+
     } catch (error) {
       console.error(error);
       toast.error("An error occurred while adding the job.");
@@ -66,9 +75,9 @@ const AddJobPage = () => {
 
     addJob(newJob);
 
-    toast.success("Job Added Successfully");
+    // toast.success("Job Added Successfully");
 
-    return navigate("/jobs");
+    // return navigate("/jobs");
   };
 
   return (

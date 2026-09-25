@@ -19,21 +19,10 @@ const EditJobPage = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
 
-  // Update Job
-  // const updateJob = async (job) => {
-  //   const res = await fetch(`/api/jobs/${job.id}`, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(job),
-  //   });
-  //   return res.ok;
-  // };
 
   const updateJob = async (job) => {
     try {
-      const res = await fetch(`/api/jobs/${job.id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${job.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +41,7 @@ const EditJobPage = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await fetch(`/api/jobs/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/jobs/${id}`);
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
@@ -102,7 +91,7 @@ const EditJobPage = () => {
     if (success) {
       toast.success("Job Updated Successfully");
       navigate(`/jobs/${id}`);
-    } else {
+    } else { 
       toast.error("Failed to update the job");
     }
   };
